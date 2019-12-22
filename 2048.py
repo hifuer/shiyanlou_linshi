@@ -1,4 +1,4 @@
-# -*-coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 """
 2048 游戏
 2019.12.21
@@ -40,7 +40,7 @@ class GameField(object):
         self.scroe=0 #当前分
         self.highscore=0  #最高分
         self.reset()  #棋盘重置
-        
+
     def reset(self):
         #更新分数
         if self.score > self.highscore:
@@ -50,14 +50,14 @@ class GameField(object):
         self.field= [[0 for i in range(self.width)] for j in range(self.heigh)]
         self.spawn()
         self.spawn()
-        
-    def move(self,direction):
+
+    def move(self, direction):
         #走一步 可通过 转置 逆转， 直接从左移得到其余三个方向的移动曹植
         def move_row_left(row):
             def tighten(row):
                 '''把零散的非零单元挤到一块'''
                 #非零元素加入新列表
-                new_row=[i for i in row if i != 0]
+                new_row = [i for i in row if i != 0]
                 #按照原列表的大小，给新列表后补零
                 new_row += [0 for i in range(len(row)  - len(new_row))]
                 return new_row
@@ -82,11 +82,11 @@ class GameField(object):
                         else:
                             #不能合并，新列表中加入该元素
                             new_row.append(row[i])
-                    #断言合并后不会改变行列大小，否则报错
-                    assert len(new_row) == len(row)
-                    return new_row
-                #先挤到一块再合并再挤到一块
-                return tighten(merage(tighten(row)))
+                #断言合并后不会改变行列大小，否则报错
+                assert len(new_row) == len(row)
+                return new_row
+            #先挤到一块再合并再挤到一块
+            return tighten(merge(tighten(row)))
         #创建 moves字典，把不同的棋盘操作作为不同的 Key ,对应不同的方法函数
         moves={}
         moves['Left'] = lambda field: [move_row_left(row) for row in field]
@@ -145,7 +145,7 @@ class GameField(object):
 
         #边框
         for row in self.field:
-            draw_how_separator()
+            draw_hor_separator()
             draw_row(row)
         draw_hor_separator()
 
@@ -239,7 +239,7 @@ def main(stdscr):
                 return 'Win'
             if game_field.is_gameover():
                 return 'Gameover'
-    return 'Game'
+        return 'Game'
 
     #状态机循环
     static_actions = {
